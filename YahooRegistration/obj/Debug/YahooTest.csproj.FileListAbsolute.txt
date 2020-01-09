@@ -11,5 +11,6 @@ E:\Programming Projects\YahooRegistration\YahooRegistration\bin\Debug\nunit.fram
 E:\Programming Projects\YahooRegistration\YahooRegistration\bin\Debug\nunit.framework.xml
 E:\Programming Projects\YahooRegistration\YahooRegistration\bin\Debug\WebDriver.xml
 E:\Programming Projects\YahooRegistration\YahooRegistration\bin\Debug\WebDriver.Support.xml
+E:\Programming Projects\YahooRegistration\YahooRegistration\obj\Debug\YahooTest.csprojResolveAssemblyReference.cache
 E:\Programming Projects\YahooRegistration\YahooRegistration\obj\Debug\YahooRegistration.dll
 E:\Programming Projects\YahooRegistration\YahooRegistration\obj\Debug\YahooRegistration.pdb

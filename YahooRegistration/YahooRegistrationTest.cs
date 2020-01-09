@@ -44,7 +44,12 @@ namespace YahooRegistration
 
             try
             {
-                Assert.IsTrue(driver.PageSource.Contains("account-challenge-phone-verify"));
+  
+        
+                Assert.IsTrue(driver.PageSource.Contains("recaptcha-iframe"));
+            //  Assert.IsTrue(driver.PageSource.Contains("account-challenge-phone-verify"));
+            //  TODO: If (recaptha-iframe exists || account-challenge-phone-verify exist) { do something }
+                Console.WriteLine("This Account can be made");
 
             } catch
             {
