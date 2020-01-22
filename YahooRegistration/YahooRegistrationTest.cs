@@ -9,16 +9,13 @@ namespace YahooRegistration
 {
 
     [TestFixture]
-    public class YahooRegistrationTest
+    public class YahooRegistrationTest : PageTestBase
     {
-
-        private IWebDriver driver;
-        public string destinationURL;
-
 
         [TestCaseSource(typeof(RegistrationDetails))]
         public void Register(string firstName, string lastName, string password, string email, string phoneNum, string bMonth, string bDay, string bYear, string gender)
         {
+            UITest(() => { 
             driver.Url = destinationURL;
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
@@ -40,34 +37,23 @@ namespace YahooRegistration
 
             driver.FindElement(By.XPath("//*[@id='reg-submit-button']")).Click();
 
-            //cannot verify phone number, next page asks to verify phone number which we cannot do
-
-            try
-            {
-  
-        
+                //cannot verify phone number, next page asks to verify phone number which we cannot do
                 Assert.IsTrue(driver.PageSource.Contains("recaptcha-iframe"));
-            //  Assert.IsTrue(driver.PageSource.Contains("account-challenge-phone-verify"));
-            //  TODO: If (recaptha-iframe exists || account-challenge-phone-verify exist) { do something }
+                //  Assert.IsTrue(driver.PageSource.Contains("account-challenge-phone-verify"));
+                //  TODO: If (recaptha-iframe exists || account-challenge-phone-verify exist) { do something }
                 Console.WriteLine("This Account can be made");
 
-            } catch
-            {
-                Console.WriteLine("Account details did not pass Yahoo requirements");
-            }
+    
             
-            
+            });
 
         }
 
         [SetUp]
-        public void GoToYahoo()
+        public void GoToYahooMaill()
         {
-
             destinationURL = "http://mail.yahoo.com";
-            ChromeOptions options = new ChromeOptions();
-            options.AddArguments("--disable-notifications");
-            driver = new ChromeDriver(options);
+            driver = PageTestBase.GetChromeSetup();
         }
         [TearDown]
         public void TearDownTest()

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RegistrationDetails.cs" />
+    <Compile Include="PageTestBase.cs" />
     <Compile Include="YahooRegistrationTest.cs" />
     <Compile Include="YahooMainPageTest.cs" />
   </ItemGroup>

@@ -12,81 +12,60 @@ using System.Threading.Tasks;
 namespace YahooRegistration
 {
     [TestFixture]
-    public class YahooMainPageTest
+    public class YahooMainPageTest : PageTestBase
     {
-        private IWebDriver driver;
-        public string destinationURL;
-        HttpWebRequest req = null;
-
         [Test]
         public void VerifyHeader()
         {
-            driver.Url = destinationURL;
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.Manage().Cookies.DeleteAllCookies();
-
-         
-            var header = driver.FindElements(By.XPath("//*[@id ='header-nav-bar']/li/a"));
-
-            foreach (var x in header)
+            UITest(() =>
             {
-                string href = x.GetAttribute("href");
-                req = (HttpWebRequest)WebRequest.Create(href);
+                driver.Url = destinationURL;
+                driver.Manage().Window.Maximize();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                driver.Manage().Cookies.DeleteAllCookies();
 
-                try
+
+                var header = driver.FindElements(By.XPath("//*[@id ='header-nav-bar']/li/a"));
+
+                foreach (var x in header)
                 {
+                    string href = x.GetAttribute("href");
+                    req = (HttpWebRequest)WebRequest.Create(href);
                     Assert.NotNull(req);
                     var response = (HttpWebResponse)req.GetResponse();
                     Console.WriteLine(("URL: " + x.GetAttribute("href") + " --- Status: " + response.StatusCode));
 
+
                 }
-                catch (WebException e)
-                {
-                    var errorResponse = (HttpWebResponse)e.Response;
-                    Console.WriteLine(("URL: " + x.GetAttribute("href") + " --- Status: " + errorResponse.StatusCode));
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("Exception caught: " + e);
-                }
-            }
+            });
 
         }
 
         [Test]
         public void VerifyTrending()
         {
-
-            driver.Url = destinationURL;
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.Manage().Cookies.DeleteAllCookies();
-
-
-            var header = driver.FindElements(By.XPath("//*[@class ='trending-list']/ul/li/a"));
-
-             foreach (var x in header)
+            UITest(() =>
             {
-                string href = x.GetAttribute("href");
-                req = (HttpWebRequest)WebRequest.Create(href);
-                try
+                driver.Url = destinationURL;
+                driver.Manage().Window.Maximize();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                driver.Manage().Cookies.DeleteAllCookies();
+
+
+
+                var header = driver.FindElements(By.XPath("//*[@class ='trending-list']/ul/li/a"));
+
+                foreach (var x in header)
                 {
+                    string href = x.GetAttribute("href");
+                    req = (HttpWebRequest)WebRequest.Create(href);
                     Assert.NotNull(req);
                     var response = (HttpWebResponse)req.GetResponse();
                     Console.WriteLine(("URL: " + x.GetAttribute("href") + " --- Status: " + response.StatusCode));
+                }
 
-                }
-                catch (WebException e)
-                {
-                    var errorResponse = (HttpWebResponse)e.Response;
-                    Console.WriteLine(("URL: " + x.GetAttribute("href") + " --- Status: " + errorResponse.StatusCode));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Exception caught: " + e);
-                }
-            }
+
+            });
         }
 
         [SetUp]
@@ -94,10 +73,7 @@ namespace YahooRegistration
         {
 
             destinationURL = "http://yahoo.com";
-            ChromeOptions options = new ChromeOptions();
-            options.AddArguments("--disable-notifications");
-            driver = new ChromeDriver(options);
-
+            driver = PageTestBase.GetChromeSetup();
         }
         [TearDown]
         public void TearDownTest()
